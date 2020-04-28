@@ -4,9 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".write_activity">
     <item
-        android:id="@+id/menu_add"
-        android:title="add"
+        android:id="@+id/menu_back"
+        android:icon="@drawable/ic_menu_back"
         android:orderInCategory="1"
+        android:title="back"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_add"
+        android:icon="@drawable/ic_menu_add"
+        android:orderInCategory="1"
+        android:title="add"
+        app:showAsAction="always" />
+
 
 </menu>
