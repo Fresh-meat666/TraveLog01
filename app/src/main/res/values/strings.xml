@@ -17,9 +17,16 @@
     <string name="current_date">Emotion</string>
     <string name="select_time">Select time</string>
     <string name="current_time">Time</string>
+    <string name="font_medium">medium</string>
+    <string name="font_regular">regular</string>
     <string name="setting_mood">Add Mood</string>
     <string name="setting_activity">Add Activity</string>
     <string name="setting_rate">Rate us</string>
     <string name="feedback_title">Feedback</string>
     <string name="setting_about">About</string>
+    <string name="time">时间:</string>
+    <string name="timeExample">2020/04/24</string>
+    <string name="place">地点:</string>
+    <string name="placeExample">北京</string>
+
 </resources>

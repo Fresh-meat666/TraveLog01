@@ -12,17 +12,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.travelog01.Database.DatabaseHelper;
 import com.example.travelog01.datepicker.CustomDatePicker;
 import com.example.travelog01.datepicker.DateFormatUtils;
-
-import butterknife.Unbinder;
 
 
 public class write_activity extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView mTvSelectedDate, mTvSelectedTime;
-    private CustomDatePicker mDatePicker, mTimerPicker;
-    public LinearLayout lDate;
+    private TextView mTvSelectedTime;
+    private CustomDatePicker mTimerPicker;
     public LinearLayout lTime;
     public ImageView lWeather;
     public LinearLayout addLlWeather;
@@ -31,8 +29,6 @@ public class write_activity extends AppCompatActivity implements View.OnClickLis
     EditText input_title, input_text;
     DatabaseHelper diaryDb;
     String weather;
-    String image;
-    Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +42,9 @@ public class write_activity extends AppCompatActivity implements View.OnClickLis
 
         initView();
 
-        //ButterKnife.bind(this);
     }
 
     private void initView() {
-        lDate =  findViewById(R.id.ll_date);
-        mTvSelectedDate = findViewById(R.id.tv_selected_date);
-        lDate.setOnClickListener(this);
-        initDatePicker();
 
         lTime =  findViewById(R.id.ll_time);
         mTvSelectedTime = findViewById(R.id.tv_selected_time);
@@ -81,11 +72,6 @@ public class write_activity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_date:
-                // 日期格式为yyyy-MM-dd
-                mDatePicker.show(mTvSelectedDate.getText().toString());
-                break;
-
             case R.id.ll_time:
                 // 日期格式为yyyy-MM-dd HH:mm
                 mTimerPicker.show(mTvSelectedTime.getText().toString());
@@ -122,28 +108,6 @@ public class write_activity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void initDatePicker() {
-        long beginTimestamp = DateFormatUtils.str2Long("2009-05-01", false);
-        long endTimestamp = System.currentTimeMillis();
-
-        mTvSelectedDate.setText(DateFormatUtils.long2Str(endTimestamp, false));
-
-        // 通过时间戳初始化日期，毫秒级别
-        mDatePicker = new CustomDatePicker(this, new CustomDatePicker.Callback() {
-            @Override
-            public void onTimeSelected(long timestamp) {
-                mTvSelectedDate.setText(DateFormatUtils.long2Str(timestamp, false));
-            }
-        }, beginTimestamp, endTimestamp);
-        // 不允许点击屏幕或物理返回键关闭
-        mDatePicker.setCancelable(false);
-        // 不显示时和分
-        mDatePicker.setCanShowPreciseTime(false);
-        // 不允许循环滚动
-        mDatePicker.setScrollLoop(false);
-        // 不允许滚动动画
-        mDatePicker.setCanShowAnim(false);
-    }
 
     private void initTimerPicker() {
         String beginTime = "2000-01-01 00:00";
@@ -182,7 +146,7 @@ public class write_activity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, "Settings Button Clicked !",
                         Toast.LENGTH_LONG).show();
                 boolean isInserted = diaryDb.insertData(mTvSelectedTime.getText().toString(),
-                        input_title.getText().toString(), input_text.getText().toString(), weather);
+                        input_title.getText().toString(), input_text.getText().toString(), "weather");
                 this.finish();
                 return true;
 
@@ -193,8 +157,6 @@ public class write_activity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDatePicker.onDestroy();
-        //unbinder.unbind();
     }
 
 }

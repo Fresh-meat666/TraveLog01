@@ -2,6 +2,7 @@ package com.example.travelog01.ui.story;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,20 +11,39 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.travelog01.Adapter.DiaryAdapter;
+import com.example.travelog01.Database.DatabaseHelper;
+import com.example.travelog01.DetailActivity;
+import com.example.travelog01.Model.DiaryBean;
 
 import com.example.travelog01.R;
+import com.example.travelog01.write_activity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class StoryFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class StoryFragment extends Fragment implements DiaryAdapter.OnItemClickListener {
 
     private StoryViewModel mViewModel;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
+    private RecyclerView mRecyclerView;
+    private DiaryAdapter mDiaryAdapter;
+    private ArrayList<DiaryBean> mList = new ArrayList<>();
+
+    DatabaseHelper diaryDb;
 
     public static StoryFragment newInstance() {
         return new StoryFragment();
@@ -33,7 +53,13 @@ public class StoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.story_fragment, container, false);
+
+        View view=inflater.inflate(R.layout.story_fragment, container, false);
+        mRecyclerView=view.findViewById(R.id.diary_xrv_list);
+
+        LinearLayoutManager manager=new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(manager);
+        return view;
     }
 
     @Override
@@ -42,6 +68,36 @@ public class StoryFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(StoryViewModel.class);
         // TODO: Use the ViewModel
         setHasOptionsMenu(true);
+        // enable the floating action button to add new story
+        FloatingActionButton button = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), write_activity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        mDiaryAdapter=new DiaryAdapter(mList,getActivity());
+        //mDiaryAdapter.setmOnItemClickListener(this);
+        mRecyclerView.setAdapter(mDiaryAdapter);
+        diaryDb = new DatabaseHelper(getActivity());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mList.clear();
+        getAllData();
+    }
+
+    private void getAllData(){
+        List<DiaryBean> list=diaryDb.getAllData();
+        if(list!=null&&list.size()>0){
+            mList.addAll(list);
+        }
+        mDiaryAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -79,6 +135,8 @@ public class StoryFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -91,18 +149,11 @@ public class StoryFragment extends Fragment {
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
-/*
-    @OnClick({R.id.fab})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fab:
-                Intent intent = new Intent(getActivity(), write_activity.class);
-                getActivity().startActivity(intent);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + view.getId());
-        }
-    }*/
+
+    @Override
+    public void onItemClick(DiaryBean diary) {
+
+    }
 }
 
 

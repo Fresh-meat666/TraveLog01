@@ -18,12 +18,6 @@
         tools:layout="@layout/report_fragment" />
 
     <fragment
-        android:id="@+id/navigation_Write"
-        android:name="com.example.travelog01.ui.write.writeFragment"
-        android:label="@string/title_Write"
-        tools:layout="@layout/write_fragment" />
-
-    <fragment
         android:id="@+id/navigation_Map"
         android:name="com.example.travelog01.ui.map.MapFragment"
         android:label="@string/title_Map"

@@ -8,6 +8,7 @@
     tools:context=".write_activity">
 
     <LinearLayout
+
         android:id="@+id/ll_date"
         android:clickable="true"
         android:layout_width="match_parent"
@@ -44,6 +45,7 @@
     </LinearLayout>
 
     <LinearLayout
+
         android:id="@+id/ll_time"
         android:clickable="true"
         android:layout_width="match_parent"
