@@ -4,25 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+
+    android:background="@color/main_bg"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/relativelayout">
 
-    <!--List View from which data is to be searched-->
+    <!--List View from which data is to be searched
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        />
+
+        />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/diary_xrv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="80dp"
+
         android:src="@mipmap/ic_add"
         app:rippleColor="@color/ripple"
         tools:ignore="NotSibling" />

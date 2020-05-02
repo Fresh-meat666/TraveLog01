@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/txtbg"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <com.example.travelog01.ui.map.BubbleView
+        android:id="@+id/place"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="0dp"
+        />
+    <!--
+    <TextView
+        android:id="@+id/placeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+        -->
+
+</LinearLayout>
